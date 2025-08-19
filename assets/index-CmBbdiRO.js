@@ -405,7 +405,7 @@ Error generating stack: `+s.message+`
     margin: 0;
   }
 `,PP=({fields:t,products:e,subtotal:r,tax:o,total:a,storeInfo:l})=>{console.log(t,e,r,o,a);const u=E.useRef(null),[f,h]=E.useState(""),m=()=>{let y=`
-  <div style="max-width: 300px; margin: 0 auto;">
+  <div style="${l?.ticketStyle||""}">
       <div>
         ${l.contentHeader}
       </div>
