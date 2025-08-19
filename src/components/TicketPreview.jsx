@@ -341,7 +341,7 @@ export const TicketPreview = ({
         </div>
       </div>
       
-      <div style="color: #666; font-size: 0.9em; padding-top: 0.5rem;">
+      <div style="padding-top: 0.5rem;">
         <p style="margin: 0; text-align: center; font-size: 10px;">${format(
           new Date(),
           "yyyy-MM-dd HH:mm:ss"
