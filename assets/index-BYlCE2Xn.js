@@ -458,7 +458,7 @@ Error generating stack: `+s.message+`
         </div>
       </div>
       
-      <div style="color: #666; font-size: 0.9em; padding-top: 0.5rem;">
+      <div style="padding-top: 0.5rem;">
         <p style="margin: 0; text-align: center; font-size: 10px;">${OP(new Date,"yyyy-MM-dd HH:mm:ss")}</p>
         ${l.contentFooter}
       </div>
