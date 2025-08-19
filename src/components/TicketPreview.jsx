@@ -240,7 +240,7 @@ export const TicketPreview = ({
 
   const generateRawHTML = () => {
     let content = `
-  <div style="max-width: 300px; margin: 0 auto;">
+  <div style="${storeInfo?.ticketStyle || ""}">
       <div>
         ${storeInfo.contentHeader}
       </div>
