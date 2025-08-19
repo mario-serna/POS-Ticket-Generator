@@ -70,6 +70,8 @@ export const Tinymce = memo(({ content, onChange }) => {
         contextmenu: "link image table",
         content_style:
           "body { font-family:Helvetica,Arial,sans-serif; font-size:16px }",
+        font_size_formats:
+          "4pt 5pt 6pt 7pt 8pt 9pt 10pt 12pt 14pt 16pt 18pt 24pt 36pt 48pt",
       }}
       onEditorChange={(content) => onChange(content)}
     />

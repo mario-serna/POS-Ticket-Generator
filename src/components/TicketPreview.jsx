@@ -3,7 +3,7 @@ import styled from "@emotion/styled";
 import PrintIcon from "@mui/icons-material/Print";
 import Button from "@mui/material/Button";
 import { format } from "date-fns";
-import { useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 
 const TicketContainer = styled.div`
   font-family: "Roboto", "Helvetica", "Arial", sans-serif;
@@ -201,7 +201,7 @@ const PrintButton = styled(Button)`
 // Print-specific styles
 const printStyles = `
   @page { 
-    size: auto;
+    size: 80mm auto;
     margin: 5mm;
   }
   body { 
@@ -228,18 +228,21 @@ const printStyles = `
 `;
 
 export const TicketPreview = ({
+  fields,
   products,
   subtotal,
   tax,
   total,
   storeInfo,
 }) => {
-  console.log(products, subtotal, tax, total);
+  console.log(fields, products, subtotal, tax, total);
   const printContentRef = useRef(null);
+  const [rawHTML, setRawHTML] = useState("");
 
-  const rawHTML = `
+  const generateRawHTML = () => {
+    let content = `
   <div style="max-width: 300px; margin: 0 auto;">
-      <div style="margin-bottom: 1rem;">
+      <div>
         ${storeInfo.contentHeader}
       </div>
                   
@@ -308,29 +311,42 @@ export const TicketPreview = ({
       </div>
     </div>`;
 
-  // Get the ticket HTML content
-  const ticketContent = `
-    <!DOCTYPE html>
-    <html>
-      <head>
-        <title>Receipt</title>
-        <style>${printStyles}</style>
-      </head>
-      <body>
-        ${rawHTML}
-        <script>
-          window.onload = function() {
-            setTimeout(function() {
-              window.print();
-              window.onafterprint = function() {
-                window.close();
-              };
-            }, 500);
-          };
-        </script>
-      </body>
-    </html>
-  `;
+    if (fields.length) {
+      fields.forEach((field) => {
+        console.log("replace", field);
+        content = content.replace(field.key, field.value);
+      });
+    }
+
+    // Get the ticket HTML content
+    const ticketContent = `
+  <!DOCTYPE html>
+  <html>
+    <head>
+      <title>Receipt</title>
+      <style>${printStyles}</style>
+    </head>
+    <body>
+      ${content}
+      <script>
+        window.onload = function() {
+          setTimeout(function() {
+            window.print();
+            window.onafterprint = function() {
+              window.close();
+            };
+          }, 500);
+        };
+      </script>
+    </body>
+  </html>
+`;
+    setRawHTML(ticketContent);
+  };
+
+  useEffect(() => {
+    generateRawHTML();
+  }, [fields, products, subtotal, tax, total, storeInfo]);
 
   const handlePrint = () => {
     const printWindow = window.open("", "_PRINT", "height=600,width=800");
@@ -342,7 +358,7 @@ export const TicketPreview = ({
 
     // Write the content to the new window
     printWindow.document.open();
-    printWindow.document.write(ticketContent);
+    printWindow.document.write(rawHTML);
     printWindow.document.close();
   };
   return (
@@ -354,7 +370,7 @@ export const TicketPreview = ({
         onClick={handlePrint}
         className="print-button"
       >
-        Print Ticket
+        Imprimir Ticket
       </PrintButton>
 
       <TicketContainer ref={printContentRef}>

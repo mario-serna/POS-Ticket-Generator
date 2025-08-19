@@ -3,6 +3,8 @@ import SaveIcon from "@mui/icons-material/Save";
 import { Button, Snackbar } from "@mui/material";
 import { useEffect, useState } from "react";
 import { CustomTabPanel, CustomTabs } from "./components/CustomTabs";
+import { FieldList } from "./components/Fields/FieldList";
+import { InputFieldList } from "./components/Fields/InputFieldList";
 import { ProductList } from "./components/ProductList";
 import { TicketPreview } from "./components/TicketPreview";
 import { Tinymce } from "./components/Tinymce";
@@ -47,7 +49,7 @@ const SectionTitle = styled.h2`
 const SaveButton = styled(Button)`
   position: fixed;
   bottom: 2rem;
-  right: 12rem;
+  right: 14rem;
   z-index: 1000;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
 `;
@@ -70,6 +72,7 @@ function App() {
   const [subtotal, setSubtotal] = useState(0);
   const [tax, setTax] = useState({ amount: 0, rate: 0, hide: false });
   const [total, setTotal] = useState(0);
+  const [fields, setFields] = useState([]);
 
   const { getConfigData, saveConfigData } = useAppContext();
   const { value } = useTabsContext();
@@ -80,6 +83,7 @@ function App() {
       console.log(data);
       if (data) {
         setStoreInfo((prev) => ({ ...prev, ...data }));
+        setFields(data.fields);
       }
       setLoading(false);
     };
@@ -89,6 +93,17 @@ function App() {
   useEffect(() => {
     updateTotals();
   }, [products]);
+
+  const updateField = (id, updates, softUpdate = false) => {
+    const updatedFields = fields.map((field) =>
+      field.id === id ? { ...field, ...updates } : field
+    );
+    setFields(updatedFields);
+    if (!softUpdate) {
+      setStoreInfo({ ...storeInfo, fields: updatedFields });
+    }
+    console.log(updates);
+  };
 
   const updateTotals = () => {
     const subtotal = products.reduce(
@@ -142,12 +157,22 @@ function App() {
             startIcon={<SaveIcon />}
             onClick={handleSave}
           >
-            Save
+            Guardar configuración
           </SaveButton>
           <CustomTabs>
             <CustomTabPanel value={value} index={0}>
+              {fields.length > 0 && (
+                <Section style={{ marginBottom: "1rem" }}>
+                  <SectionTitle>Campos</SectionTitle>
+                  <InputFieldList
+                    fields={fields}
+                    onUpdate={updateField}
+                    softUpdate
+                  />
+                </Section>
+              )}
               <Section>
-                <SectionTitle>Products</SectionTitle>
+                <SectionTitle>Productos</SectionTitle>
                 <ProductList
                   products={products}
                   onAdd={addProduct}
@@ -158,7 +183,15 @@ function App() {
             </CustomTabPanel>
             <CustomTabPanel value={value} index={1}>
               <Section>
-                <SectionTitle>Header</SectionTitle>
+                <SectionTitle>Campos</SectionTitle>
+                <FieldList
+                  fields={fields}
+                  setFields={setFields}
+                  onUpdate={updateField}
+                />
+              </Section>
+              <Section>
+                <SectionTitle>Encabezado</SectionTitle>
                 <div style={{ marginBottom: "1.5rem" }}>
                   {loading ? (
                     <p>Loading...</p>
@@ -171,7 +204,7 @@ function App() {
                     />
                   )}
                 </div>
-                <SectionTitle>Footer</SectionTitle>
+                <SectionTitle>Pie de página</SectionTitle>
                 <div style={{ marginBottom: "1.5rem" }}>
                   {loading ? (
                     <p>Loading...</p>
@@ -190,8 +223,9 @@ function App() {
 
           <div style={{ marginTop: "72px" }}>
             <Section>
-              <SectionTitle>Ticket Preview</SectionTitle>
+              <SectionTitle>Ticket</SectionTitle>
               <TicketPreview
+                fields={fields}
                 products={products}
                 subtotal={subtotal}
                 tax={tax}

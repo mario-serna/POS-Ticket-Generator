@@ -14,7 +14,6 @@ import {
   TableRow,
   TextField,
   Tooltip,
-  Typography,
   useMediaQuery,
   useTheme,
 } from "@mui/material";
@@ -61,9 +60,6 @@ export const ProductList = ({ products, onAdd, onUpdate, onRemove }) => {
           backgroundColor: theme.palette.background.paper,
         }}
       >
-        <Typography variant="h6" gutterBottom>
-          Agregar Producto
-        </Typography>
         <Grid container spacing={2} alignItems="center">
           <Grid size={{ xs: 12, md: 6 }}>
             <TextField
@@ -117,7 +113,7 @@ export const ProductList = ({ products, onAdd, onUpdate, onRemove }) => {
             />
           </Grid>
           <Grid container justifyContent="flex-end" size={{ xs: 12, md: 12 }}>
-            <Tooltip title="Add Product">
+            <Tooltip title="Agregar">
               <Button
                 type="submit"
                 variant="contained"
@@ -125,7 +121,7 @@ export const ProductList = ({ products, onAdd, onUpdate, onRemove }) => {
                 startIcon={<AddIcon />}
                 fullWidth={isMobile}
               >
-                {isMobile ? "Add" : "Add Product"}
+                {isMobile ? "Agregar" : "Agregar Producto"}
               </Button>
             </Tooltip>
           </Grid>
