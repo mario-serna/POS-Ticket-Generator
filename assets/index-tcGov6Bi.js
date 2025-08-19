@@ -386,7 +386,6 @@ Error generating stack: `+s.message+`
   }
   body { 
     margin: 0;
-    padding: 1rem;
     -webkit-print-color-adjust: exact;
     print-color-adjust: exact;
     font-family: Arial, sans-serif;
