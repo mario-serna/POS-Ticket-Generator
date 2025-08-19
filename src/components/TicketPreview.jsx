@@ -249,10 +249,34 @@ export const TicketPreview = ({
         <table style="width: 100%; border-collapse: collapse;">
           <thead>
             <tr>
-              <th style="max-width: 100px; text-align: left; padding: 0.25rem 0; border-bottom: 1px solid #eee;">Producto</th>
-              <th style="text-align: right; padding: 0.25rem 0; border-bottom: 1px solid #eee;">Cantidad</th>
-              <th style="text-align: right; padding: 0.25rem 0; border-bottom: 1px solid #eee;">Precio</th>
-              <th style="text-align: right; padding: 0.25rem 0; border-bottom: 1px solid #eee;">Total</th>
+            ${
+              storeInfo?.productsTable?.name
+                ? `<th style="max-width: 100px; text-align: left; padding: 0.25rem 0; border-bottom: 1px solid #eee;">
+                  Producto
+                </th>`
+                : ""
+            }
+            ${
+              storeInfo?.productsTable?.quantity
+                ? `<th style="text-align: right; padding: 0.25rem 0; border-bottom: 1px solid #eee;">
+                  Cantidad
+                </th>`
+                : ""
+            }
+            ${
+              storeInfo?.productsTable?.price
+                ? `<th style="text-align: right; padding: 0.25rem 0; border-bottom: 1px solid #eee;">
+                  Precio
+                </th>`
+                : ""
+            }
+            ${
+              storeInfo?.productsTable?.total
+                ? `<th style="text-align: right; padding: 0.25rem 0; border-bottom: 1px solid #eee;">
+                  Total
+                </th>`
+                : ""
+            }
             </tr>
           </thead>
           <tbody>
@@ -260,18 +284,34 @@ export const TicketPreview = ({
               .map(
                 (product) => `
               <tr>
-                <td style="max-width: 100px; padding: 0.25rem 0; border-bottom: 1px solid #f5f5f5;">${
-                  product.name || "Item"
-                }</td>
-                <td style="text-align: right; padding: 0.25rem 0; border-bottom: 1px solid #f5f5f5;">${
-                  product.quantity || 0
-                }</td>
-                <td style="text-align: right; padding: 0.25rem 0; border-bottom: 1px solid #f5f5f5;">$${(
-                  product.price || 0
-                ).toFixed(2)}</td>
-                <td style="text-align: right; padding: 0.25rem 0; border-bottom: 1px solid #f5f5f5;">$${(
-                  (product.price || 0) * (product.quantity || 0)
-                ).toFixed(2)}</td>
+                ${
+                  storeInfo?.productsTable?.name
+                    ? `<td style="max-width: 100px; padding: 0.25rem 0; border-bottom: 1px solid #f5f5f5;">${
+                        product.name || "Item"
+                      }</td>`
+                    : ""
+                }
+                ${
+                  storeInfo?.productsTable?.quantity
+                    ? `<td style="text-align: right; padding: 0.25rem 0; border-bottom: 1px solid #f5f5f5;">${
+                        product.quantity || 0
+                      }</td>`
+                    : ""
+                }
+                ${
+                  storeInfo?.productsTable?.price
+                    ? `<td style="text-align: right; padding: 0.25rem 0; border-bottom: 1px solid #f5f5f5;">$${(
+                        product.price || 0
+                      ).toFixed(2)}</td>`
+                    : ""
+                }
+                ${
+                  storeInfo?.productsTable?.total
+                    ? `<td style="text-align: right; padding: 0.25rem 0; border-bottom: 1px solid #f5f5f5;">$${(
+                        (product.price || 0) * (product.quantity || 0)
+                      ).toFixed(2)}</td>`
+                    : ""
+                }
               </tr>
             `
               )
