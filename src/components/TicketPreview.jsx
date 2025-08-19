@@ -206,7 +206,6 @@ const printStyles = `
   }
   body { 
     margin: 0;
-    padding: 1rem;
     -webkit-print-color-adjust: exact;
     print-color-adjust: exact;
     font-family: Arial, sans-serif;
