@@ -100,7 +100,6 @@ function App() {
       : subtotal * ((storeInfo.tax.rate || 0) / 100); // 10% tax
     const total = storeInfo.tax.hide ? subtotal : subtotal + tax;
 
-    console.log(subtotal, tax, total);
     setSubtotal(subtotal);
     setTax({
       amount: tax,
@@ -167,7 +166,6 @@ function App() {
                     <Tinymce
                       content={storeInfo.contentHeader}
                       onChange={(html) => {
-                        console.log(html);
                         setStoreInfo({ ...storeInfo, contentHeader: html });
                       }}
                     />
@@ -181,7 +179,6 @@ function App() {
                     <Tinymce
                       content={storeInfo.contentFooter}
                       onChange={(html) => {
-                        console.log(html);
                         setStoreInfo({ ...storeInfo, contentFooter: html });
                       }}
                     />
