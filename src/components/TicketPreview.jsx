@@ -6,11 +6,8 @@ import { format } from "date-fns";
 import { useEffect, useRef, useState } from "react";
 
 const TicketContainer = styled.div`
-  font-family: "Roboto", "Helvetica", "Arial", sans-serif;
-  min-width: 320px;
-  max-width: 320px;
+  width: fit-content;
   margin: 0 auto;
-  padding: 1.5rem;
   border-radius: 8px;
   background: white;
   color: #333;
@@ -27,165 +24,6 @@ const TicketContainer = styled.div`
     .print-button {
       display: none;
     }
-
-    /* Ensure proper spacing for print */
-    ${"" /* Add any additional print-specific styles here */}
-  }
-`;
-
-const Header = styled.div`
-  margin-bottom: 1.5rem;
-  padding-bottom: 1rem;
-  border-bottom: 2px solid #eee;
-
-  .logo-container {
-    margin: 0 auto 1rem;
-    width: 100%;
-    max-width: 200px;
-    height: auto;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    img {
-      width: ${({ logoSize = 100 }) => `${logoSize}%`};
-      height: auto;
-      max-width: 100%;
-      max-height: 150px;
-      object-fit: contain;
-      transition: width 0.2s ease-in-out;
-    }
-  }
-
-  h1,
-  h2,
-  h3 {
-    margin: 0.5rem 0;
-    color: #333;
-  }
-
-  p {
-    margin: 0.25rem 0;
-    color: #555;
-    font-size: 0.95em;
-  }
-
-  .contact-info {
-    margin-top: 0.75rem;
-    padding-top: 0.75rem;
-    border-top: 1px dashed #ddd;
-  }
-`;
-
-const Content = styled.div`
-  margin: 1.5rem 0;
-  line-height: 1.5;
-  color: #333;
-
-  h1,
-  h2,
-  h3,
-  h4,
-  h5,
-  h6 {
-    margin: 1.25rem 0 0.75rem;
-    color: #1a1a1a;
-  }
-
-  p {
-    margin: 0.75rem 0;
-    line-height: 1.5;
-  }
-
-  ul,
-  ol {
-    margin: 0.75rem 0;
-    padding-left: 1.5rem;
-  }
-
-  li {
-    margin: 0.4rem 0;
-  }
-
-  strong {
-    font-weight: 600;
-  }
-
-  em {
-    font-style: italic;
-  }
-`;
-
-const Products = styled.div`
-  margin: 1.5rem 0;
-
-  table {
-    width: 100%;
-    border-collapse: collapse;
-    margin: 0.75rem 0;
-    font-size: 0.95em;
-  }
-
-  th {
-    text-align: left;
-    padding: 0.5rem 0.25rem;
-    border-bottom: 2px solid #e0e0e0;
-    font-weight: 600;
-    color: #555;
-  }
-
-  td {
-    padding: 0.5rem 0.25rem;
-    border-bottom: 1px solid #f0f0f0;
-    vertical-align: top;
-  }
-
-  tr:last-child td {
-    border-bottom: 2px solid #e0e0e0;
-  }
-
-  .right {
-    text-align: right;
-  }
-
-  .item-name {
-    font-weight: 500;
-  }
-`;
-
-const Totals = styled.div`
-  margin-top: 1.5rem;
-  padding-top: 1rem;
-  border-top: 2px solid #e0e0e0;
-
-  .row {
-    display: flex;
-    justify-content: space-between;
-    margin: 0.5rem 0;
-    padding: 0.25rem 0;
-    font-size: 1.05em;
-  }
-
-  .subtotal {
-    font-weight: 500;
-  }
-
-  .tax {
-    color: #666;
-  }
-
-  .total {
-    font-weight: 700;
-    font-size: 1.3em;
-    margin-top: 0.75rem;
-    padding-top: 0.75rem;
-    border-top: 2px dashed #e0e0e0;
-  }
-
-  .divider {
-    height: 1px;
-    background: linear-gradient(to right, transparent, #e0e0e0, transparent);
-    margin: 0.5rem 0;
   }
 `;
 
@@ -380,7 +218,7 @@ export const TicketPreview = ({
     </body>
   </html>
 `;
-    setRawHTML(ticketContent);
+    setRawHTML(content);
   };
 
   useEffect(() => {
@@ -412,9 +250,10 @@ export const TicketPreview = ({
         Imprimir Ticket
       </PrintButton>
 
-      <TicketContainer ref={printContentRef}>
-        <div dangerouslySetInnerHTML={{ __html: rawHTML }} />
-      </TicketContainer>
+      <TicketContainer
+        ref={printContentRef}
+        dangerouslySetInnerHTML={{ __html: rawHTML }}
+      ></TicketContainer>
     </>
   );
 };
