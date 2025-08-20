@@ -75,6 +75,7 @@ export const TicketPreview = ({
   console.log(fields, products, subtotal, tax, total);
   const printContentRef = useRef(null);
   const [rawHTML, setRawHTML] = useState("");
+  const [previewHTML, setPreviewHTML] = useState("");
 
   const generateRawHTML = () => {
     let content = `
@@ -218,7 +219,9 @@ export const TicketPreview = ({
     </body>
   </html>
 `;
-    setRawHTML(content);
+
+    setRawHTML(ticketContent);
+    setPreviewHTML(content);
   };
 
   useEffect(() => {
@@ -252,7 +255,7 @@ export const TicketPreview = ({
 
       <TicketContainer
         ref={printContentRef}
-        dangerouslySetInnerHTML={{ __html: rawHTML }}
+        dangerouslySetInnerHTML={{ __html: previewHTML }}
       ></TicketContainer>
     </>
   );
